@@ -32,8 +32,9 @@
     
     IGXMLNodeSet *origin_node = [doc queryWithXPath:@"//origin"];
     [origin_node enumerateNodesUsingBlock:^(IGXMLNode * _Nonnull node, NSUInteger idx, BOOL * _Nullable stop) {
-        NSLog(@"origin node content = %@, %@",[node attribute:@"href"], node.attributeNames);
-        [node addNextSiblingWithNode:[[IGXMLDocument alloc] initWithXMLString:@"<p>Test</p>" error:nil]];
+        NSLog(@"origin node content = %@, %@",[node attribute:@"href"], node.text);
+        [node addNextSiblingWithNode:[[IGXMLDocument alloc] initWithXMLString:[NSString stringWithFormat:@"<a href=\"%@\">%@</a>", node.text, [node attribute:@"href"]] error:nil]];
+        [node remove];
     }];
     
     
